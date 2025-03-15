@@ -1,0 +1,18 @@
+PINTO00309/PINTO_model_zoo/307_YOLOv7/post_process_gen_tool/
+
+sıra ile:
+1- make_boxes_scores.py
+netron-app çalıştır ve "/Constan" incele
+2- make_cxcywh_y1x1y2x2.py
+netron-app çalıştır ve "/Constan" incele
+netron-app çalıştır ve "Slice" incele
+snc4onnx ile birleştirme yap.
+
+
+
+"""
+PATH:
+MODELIN RAW ÇIKTISI ASLINDA ANLAMLI DEĞİL.
+POSTPROCESS GENELDE MODELDEN BAĞIMSIZ OLUR ÇÜNKÜ STATİK DEĞİLDİR, DİNAMİK İŞLEMLER GEREKİR.
+
+"""
