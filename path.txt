@@ -12,7 +12,26 @@ snc4onnx ile birleştirme yap.
 
 """
 PATH:
-MODELIN RAW ÇIKTISI ASLINDA ANLAMLI DEĞİL.
-POSTPROCESS GENELDE MODELDEN BAĞIMSIZ OLUR ÇÜNKÜ STATİK DEĞİLDİR, DİNAMİK İŞLEMLER GEREKİR.
+    MODELIN RAW ÇIKTISI ASLINDA ANLAMLI DEĞİL.
+    POSTPROCESS GENELDE MODELDEN BAĞIMSIZ OLUR ÇÜNKÜ STATİK DEĞİLDİR, DİNAMİK İŞLEMLER GEREKİR.
+    YOLO12 modelinin postprocess aşaması ayri bir model gibi PYtorch'da tasarlanacaktır. 
+    ONNX formatına çevirilip birleştirilecektir.
 
+    Öncelikle modelin çıkış boyutunu inceleyelim.
+    RAW YOLO12 çıkış boyutu: 84x8400
+    Bu çıkışı NMS işlemine hazırlamak için öncelikle cxcywh foramtında olan box bilgilerini ve bunların confidence(sadece person class için) değerlerini alacağız.
+
+    1:
+        def forward(self, x):
+            # x.shape is (1,84,8400)
+            x = torch.t(x[0]) # x.shape is (8400,84)
+            boxes = x[..., :4] # cxcywh [boxes, 4]
+            person_conf = x[..., 4:5] # [boxes, 1]
+            person_conf = torch.sqrt(person_conf)
+            return boxes, person_conf
+
+    bu torch.nn.Modeule classı içerisindeki forward methodu olacaktır.
+    
+    
+    Burada modelin transpozu alınacaktır
 """
