@@ -31,7 +31,4 @@ PATH:
             return boxes, person_conf
 
     bu torch.nn.Modeule classı içerisindeki forward methodu olacaktır.
-    
-    
-    Burada modelin transpozu alınacaktır
 """

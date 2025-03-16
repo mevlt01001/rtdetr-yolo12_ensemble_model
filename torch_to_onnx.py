@@ -1,7 +1,6 @@
 import onnx
 from onnxsim import simplify
 import torch, os
-from cxcywh_and_scores import cxcywh_and_scores
 
 onnx_folder_path = 'onnx_folder'
 os.makedirs(onnx_folder_path, exist_ok=True)
@@ -32,16 +31,3 @@ def model_to_onnx(model: torch.nn.Module,
     model_simp, check = simplify(model_onnx2)
     onnx.save(model_simp, onnx_file_path)
     
-
-
-cxcywh_and_scores_model = cxcywh_and_scores()
-
-model_to_onnx(
-    model=cxcywh_and_scores_model,
-    onnx_name='cxcywh_and_scores.onnx',
-    input_shape=(1,84,8400),
-    OPSET=19,
-    input_names=['predictions'],
-    output_names=['boxes_cxcywh', 'person_scores']
-)
-
